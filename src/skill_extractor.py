@@ -1,4 +1,3 @@
-
 import csv
 import re
 
@@ -39,14 +38,49 @@ def extract_skills(text, skills):
 
     text = text.lower()
 
-    detected_skills = []
+    matches = []
 
-    for skill in skills:
+    # Check longer skills first
+    sorted_skills = sorted(skills, key=len, reverse=True)
+
+    for skill in sorted_skills:
         skill_lower = skill.lower()
 
-        pattern = r"(?<!\w)" + re.escape(skill_lower) + r"(?!\w)"
+        pattern = (
+            r"(?<![a-z0-9])"
+            + re.escape(skill_lower)
+            + r"(?![a-z0-9])"
+        )
 
-        if re.search(pattern, text):
-            detected_skills.append(skill)
+        match = re.search(pattern, text)
 
-    return detected_skills
+        if match:
+            matches.append(
+                {
+                    "skill": skill,
+                    "start": match.start(),
+                    "end": match.end(),
+                }
+            )
+
+    # Keep only non-overlapping matches
+    selected_matches = []
+
+    for match in matches:
+        overlaps = False
+
+        for selected in selected_matches:
+            if (
+                match["start"] < selected["end"]
+                and match["end"] > selected["start"]
+            ):
+                overlaps = True
+                break
+
+        if not overlaps:
+            selected_matches.append(match)
+
+    # Sort skills according to their position in the text
+    selected_matches.sort(key=lambda item: item["start"])
+
+    return [match["skill"] for match in selected_matches]
