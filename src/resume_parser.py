@@ -1,5 +1,6 @@
 
 #Responsible for extracting text from uploaded resume PDF files using PyMuPDF.
+# This module provides a function to extract text from PDF files, handling errors and ensuring that the extracted text is valid.
 
 import pymupdf
 
