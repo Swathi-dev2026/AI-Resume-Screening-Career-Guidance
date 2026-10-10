@@ -1,0 +1,20 @@
+
+skill,resource_name,resource_url,resource_type
+Python,Python Official Tutorial,https://docs.python.org/3/tutorial/,Documentation
+SQL,SQLBolt,https://sqlbolt.com/,Interactive Tutorial
+Pandas,Pandas Getting Started,https://pandas.pydata.org/docs/getting_started/,Documentation
+NumPy,NumPy Learn,https://numpy.org/learn/,Learning Resources
+Machine Learning,Scikit-learn User Guide,https://scikit-learn.org/stable/user_guide.html,Documentation
+Scikit-learn,Scikit-learn Tutorials,https://scikit-learn.org/stable/auto_examples/index.html,Tutorials
+Statistics,Khan Academy Statistics and Probability,https://www.khanacademy.org/math/statistics-probability,Course
+Power BI,Microsoft Power BI Learning,https://learn.microsoft.com/en-us/training/powerplatform/power-bi/,Learning Resources
+Tableau,Tableau Training,https://www.tableau.com/learn/training,Learning Resources
+Deep Learning,DeepLearning.AI,https://www.deeplearning.ai/,Courses
+Natural Language Processing,Hugging Face NLP Course,https://huggingface.co/learn/nlp-course,Course
+TensorFlow,TensorFlow Tutorials,https://www.tensorflow.org/tutorials,Tutorials
+PyTorch,PyTorch Tutorials,https://pytorch.org/tutorials/,Tutorials
+Java,Dev.java Learning,https://dev.java/learn/,Learning Resources
+Docker,Docker Get Started,https://docs.docker.com/get-started/,Documentation
+AWS,AWS Skill Builder,https://skillbuilder.aws/,Learning Resources
+Azure,Microsoft Learn Azure,https://learn.microsoft.com/en-us/training/azure/,Learning Resources
+Excel,Microsoft Excel Help and Learning,https://support.microsoft.com/excel,Documentation
