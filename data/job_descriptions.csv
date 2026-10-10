@@ -1,0 +1,7 @@
+job_role,job_description
+Data Analyst,"Analyze datasets, write SQL queries, clean data with Python and Excel, build Power BI or Tableau dashboards, and communicate insights using statistics."
+Data Scientist,"Use Python, SQL, statistics, machine learning, Pandas, NumPy, and Scikit-learn to analyze data, build predictive models, and communicate findings."
+Machine Learning Engineer,"Develop and deploy machine learning systems using Python, Scikit-learn, TensorFlow, PyTorch, and deep learning techniques."
+NLP Engineer,"Build natural language processing applications using Python, text preprocessing, machine learning, deep learning, and NLP frameworks."
+Data Engineer,"Build data pipelines, process structured data using Python and SQL, and work with cloud platforms, databases, and data infrastructure."
+Business Intelligence Analyst,"Create business reports and interactive dashboards using SQL, Excel, Power BI, or Tableau to support data-driven decisions."

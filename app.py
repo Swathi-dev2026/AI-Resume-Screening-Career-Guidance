@@ -5,6 +5,10 @@ from src.resume_parser import extract_text_from_pdf
 from src.text_preprocessing import clean_text
 from src.skill_extractor import load_skills, extract_skills
 from src.job_matcher import load_job_roles, match_job_roles
+from src.nlp_matcher import (
+    load_job_descriptions,
+    match_resume_to_jobs,
+)
 from src.skill_gap import analyze_skill_gap
 from src.career_guidance import (
     load_learning_resources,
@@ -29,6 +33,9 @@ st.write(
 try:
     skills = load_skills("data/skills.csv")
     job_roles = load_job_roles("data/job_roles.csv")
+    job_descriptions = load_job_descriptions(
+        "data/job_descriptions.csv"
+    )
     learning_resources = load_learning_resources(
         "data/learning_resources.csv"
     )
@@ -80,47 +87,36 @@ if uploaded_file is not None:
                 )
                 st.write(f"Skill match: {result['match_score']:.2f}%")
 
-        st.subheader("3. Skill-Gap Analysis")
+        st.subheader("3. NLP-Based Job Description Matching")
 
-        if job_roles:
-            role_names = [
-                role["job_role"]
-                for role in job_roles
-            ]
+        st.caption(
+            "These scores measure textual similarity between your resume "
+            "and each job description. They are not hiring probabilities."
+        )
 
-            selected_role_name = st.selectbox(
-                "Choose a job role to analyze",
-                role_names,
+        nlp_results = match_resume_to_jobs(
+            cleaned_text,
+            job_descriptions,
+        )
+
+        if nlp_results:
+            for result in nlp_results:
+                st.markdown(f"**{result['job_role']}**")
+                st.progress(
+                    min(
+                        max(result["similarity_score"] / 100, 0.0),
+                        1.0,
+                    )
+                )
+                st.write(
+                    f"Text similarity: "
+                    f"{result['similarity_score']:.2f}%"
+                )
+        else:
+            st.info(
+                "Unable to calculate text similarity. "
+                "Please provide a resume with readable text."
             )
-
-            selected_role = next(
-                role
-                for role in job_roles
-                if role["job_role"] == selected_role_name
-            )
-
-            gap = analyze_skill_gap(
-                detected_skills,
-                selected_role,
-            )
-
-            col1, col2 = st.columns(2)
-
-            with col1:
-                st.markdown("**Matched skills**")
-                if gap["matched_skills"]:
-                    for skill in gap["matched_skills"]:
-                        st.write(f"✅ {skill}")
-                else:
-                    st.write("No required skills matched yet.")
-
-            with col2:
-                st.markdown("**Skills to develop**")
-                if gap["missing_skills"]:
-                    for skill in gap["missing_skills"]:
-                        st.write(f"📘 {skill}")
-                else:
-                    st.write("All listed required skills were matched!")
 
             st.metric(
                 "Required-skill coverage",
