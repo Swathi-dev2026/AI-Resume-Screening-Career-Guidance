@@ -1,34 +1,29 @@
 
-#Responsible for extracting text from uploaded resume PDF files using PyMuPDF.
-# This module provides a function to extract text from PDF files, handling errors and ensuring that the extracted text is valid.
-
-import pymupdf
+import fitz
 
 
-def extract_text_from_pdf(pdf_path):
+def extract_text_from_pdf(pdf_source):
     """
-    Extract text from a PDF file.
-
-    Parameters:
-        pdf_path: Path to the PDF file.
-
-    Returns:
-        Extracted text from the PDF.
+    Extract text from a PDF file path or a Streamlit uploaded file.
     """
+
     try:
-        with pymupdf.open(pdf_path) as document:
-            text = ""
+        # Handle a Streamlit uploaded file.
+        if hasattr(pdf_source, "getvalue"):
+            pdf_bytes = pdf_source.getvalue()
 
-            for page in document:
-                text += page.get_text()
+            with fitz.open(stream=pdf_bytes, filetype="pdf") as document:
+                return "\n".join(
+                    page.get_text() for page in document
+                )
 
-        if not text.strip():
-            raise ValueError("No readable text was found in the PDF.")
-
-        return text
-
-    except FileNotFoundError:
-        raise FileNotFoundError(f"PDF file not found: {pdf_path}")
+        # Handle a regular file path.
+        with fitz.open(pdf_source) as document:
+            return "\n".join(
+                page.get_text() for page in document
+            )
 
     except Exception as error:
-        raise RuntimeError(f"Could not extract text from PDF: {error}")
+        raise RuntimeError(
+            f"Could not extract text from PDF: {error}"
+        ) from error
